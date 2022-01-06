@@ -17,6 +17,13 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
           primarySwatch: Colors.purple,
           fontFamily: 'Quicksand',
+          textTheme: ThemeData.light().textTheme.copyWith(
+                headline6: TextStyle(
+                  fontFamily: 'Open Sans',
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
           // Applies theme to all appbars
           appBarTheme: AppBarTheme(
             textTheme: ThemeData.light().textTheme.copyWith(
