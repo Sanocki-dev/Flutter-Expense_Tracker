@@ -6,19 +6,23 @@ import '../models/transaction.dart';
 
 class TransactionList extends StatelessWidget {
   final List<Transaction> transactions;
+  final Function deleteTransaction;
 
   // Passed from parent
-  TransactionList(this.transactions);
+  TransactionList(this.transactions, this.deleteTransaction);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: 600,
+        height: 450,
         child: transactions.isEmpty
             ? Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text('No transactions added yet!'),
+                  Text(
+                    'No transactions added yet!',
+                    style: Theme.of(context).textTheme.headline6,
+                  ),
                   SizedBox(
                     height: 50,
                   ),
@@ -55,6 +59,12 @@ class TransactionList extends StatelessWidget {
                       ),
                       subtitle: Text(
                         DateFormat.yMMMMd().format(transactions[index].date),
+                      ),
+                      trailing: IconButton(
+                        onPressed: () =>
+                            deleteTransaction(transactions[index].id),
+                        icon: Icon(Icons.delete),
+                        color: Theme.of(context).errorColor,
                       ),
                     ),
                   );

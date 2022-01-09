@@ -33,7 +33,9 @@ class MyApp extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-          )),
+          ),
+          colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.purple)
+              .copyWith(secondary: Colors.amber)),
       home: MyHomePage(),
     );
   }
@@ -71,12 +73,12 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   // Private function to add new Transactions to the list
-  void _addNewTransaction(String title, double amount) {
+  void _addNewTransaction(String title, double amount, DateTime date) {
     final newTx = Transaction(
       id: DateTime.now().toString(),
       title: title,
       amount: amount,
-      date: DateTime.now(),
+      date: date,
     );
 
     // Updates the interface
@@ -85,6 +87,14 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  // Method to delete existing transactions
+  void _deleteTransaction(String id) {
+    setState(() {
+      _userTransactions.removeWhere((tx) => tx.id == id);
+    });
+  }
+
+  // Method to show the transaction screen
   void _startAddNewTransaction(BuildContext ctx) {
     showModalBottomSheet(
       context: ctx,
@@ -116,7 +126,7 @@ class _MyHomePageState extends State<MyHomePage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             Chart(_recentTransactions),
-            TransactionList(_userTransactions)
+            TransactionList(_userTransactions, _deleteTransaction)
           ],
         ),
       ),
